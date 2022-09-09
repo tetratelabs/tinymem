@@ -1,10 +1,9 @@
-package exports
+package tinymem
 
 import (
 	"testing"
 	"unsafe"
 
-	"github.com/tetratelabs/tinymem"
 	"github.com/tetratelabs/tinymem/internal"
 )
 
@@ -23,7 +22,7 @@ func Test_mallocRoundTrip(t *testing.T) {
 		buf[2] = 'o'
 
 		expected := "foo"
-		if have := tinymem.PtrToString(ptr, size); expected != have {
+		if have := PtrToString(ptr, size); expected != have {
 			t.Errorf("Unexpected string, have %s, expected %s", have, expected)
 		}
 	})

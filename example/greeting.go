@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"github.com/tetratelabs/tinymem"
-	_ "github.com/tetratelabs/tinymem/exports"
 )
 
 // main is required for TinyGo to compile to Wasm.

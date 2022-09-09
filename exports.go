@@ -1,10 +1,4 @@
-// Package exports contains WebAssembly function exports for memory allocation.
-// It is not necessary to import these otherwise.
-//
-// Ex.
-//
-//	import _ github.com/tetratelabs/tinymem/exports
-package exports
+package tinymem
 
 import "unsafe"
 

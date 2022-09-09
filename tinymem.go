@@ -1,3 +1,8 @@
+// Package tinymem contains WebAssembly functions for memory allocation.
+//
+// Note: If you are only interested in exporting functions to the host, blank
+// import this package like so:
+//	import _ github.com/tetratelabs/tinymem
 package tinymem
 
 import (
