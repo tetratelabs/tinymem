@@ -14,7 +14,7 @@ func Test_mallocRoundTrip(t *testing.T) {
 
 	size := uint32(3)
 
-	ptr := malloc(3)
+	ptr := malloc(size)
 	t.Run("malloc", func(t *testing.T) {
 		buf := *(*[]byte)(unsafe.Pointer(internal.SliceHeader(ptr, size)))
 		buf[0] = 'f'
