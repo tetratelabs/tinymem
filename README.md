@@ -6,3 +6,7 @@
 
 TinyMem is a collection of WebAssembly compatible memory utilities for TinyGo.
 This allows you to implement tested best practices, without copy/paste!
+
+Check out our [example](example), which lets the WebAssembly host safely use
+TinyGo's memory allocator, in order to pass strings which aren't natively
+supported in WebAssembly.

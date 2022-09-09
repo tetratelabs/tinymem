@@ -1,4 +1,3 @@
 module github.com/tetratelabs/tinymem
 
-// Minimum version of earliest supported TinyGo
-go 1.16
+go 1.18
