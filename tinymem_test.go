@@ -1,8 +1,9 @@
 package tinymem_test
 
 import (
-	"github.com/tetratelabs/tinymem"
 	"testing"
+
+	"github.com/tetratelabs/tinymem"
 )
 
 func Test_StringRoundTrip(t *testing.T) {
