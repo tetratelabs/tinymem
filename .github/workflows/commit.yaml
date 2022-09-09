@@ -5,13 +5,13 @@
 name: "build"
 
 on:
-  push:  # We run tests on non-tagged pushes to master
+  push:  # We run tests on non-tagged pushes to main
     tags: ''
-    branches: master
+    branches: main
     paths-ignore:
       - '**/*.md'
-  pull_request:  # We also run tests on pull requests targeted at the master branch.
-    branches: master
+  pull_request:  # We also run tests on pull requests targeted at the main branch.
+    branches: main
     paths-ignore:
       - '**/*.md'
   # workflow_dispatch will let us manually trigger the workflow from GitHub actions dashboard.
@@ -25,13 +25,10 @@ jobs:
   test:
     runs-on: ubuntu-20.04
     strategy:
-      # To simplify setup, we use one Go version, even if it is out of the official version range.
-      # This version must be <= max version of earliest TinyGo supported and >= min version of latest.
       matrix:
         go-version:  # Note: Go only supports 2 versions: https://go.dev/doc/devel/release#policy
-          - "1.16"  # Minimum Go version of latest TinyGo albeit EOL.
+          - "1.18"
         tinygo-version:  # Note: TinyGo only supports latest: https://github.com/tinygo-org/tinygo/releases
-          - "0.18.0"  # First version to use wasi_snapshot_preview1
           - "0.25.0"  # Latest
 
     steps:
@@ -51,9 +48,13 @@ jobs:
           echo "TINYGOROOT=/usr/local/tinygo" >> $GITHUB_ENV
           echo "/usr/local/tinygo/bin" >> $GITHUB_PATH
 
-      - name: "Build example"
-        run: tinygo build -o example/hello.wasm -scheduler=none --no-debug -target=wasi example/hello.go
+      - name: "Set up wasmtime"
+        run: |  # TinyGo currently requires wasmtime to execute `tingo test -target=wasi ...`
+          curl https://wasmtime.dev/install.sh -sSf | bash
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
 
-      - name: "Test"
+      - name: "Test with Go"
         run: go test -v ./...
 
+      - name: "Test with TinyGo"
+        run: tinygo test -target=wasi ./...
