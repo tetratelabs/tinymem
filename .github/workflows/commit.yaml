@@ -53,8 +53,14 @@ jobs:
           curl https://wasmtime.dev/install.sh -sSf | bash
           echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
 
+      - name: "Build example"
+        run: tinygo build -o example/greeting.wasm -scheduler=none --no-debug -target=wasi example/greeting.go
+
       - name: "Test with Go"
         run: go test -v ./...
 
       - name: "Test with TinyGo"
         run: tinygo test -target=wasi ./...
+
+      - name: "E2E test"
+        run: cd internal/e2e; go test -v ./...
