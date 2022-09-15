@@ -3,8 +3,6 @@ package tinymem
 import (
 	"testing"
 	"unsafe"
-
-	"github.com/tetratelabs/tinymem/internal"
 )
 
 func Test_mallocRoundTrip(t *testing.T) {
@@ -16,7 +14,7 @@ func Test_mallocRoundTrip(t *testing.T) {
 
 	ptr := malloc(size)
 	t.Run("malloc", func(t *testing.T) {
-		buf := *(*[]byte)(unsafe.Pointer(internal.SliceHeader(ptr, size)))
+		buf := unsafe.Slice((*byte)(unsafe.Pointer(ptr)), size)
 		buf[0] = 'f'
 		buf[1] = 'o'
 		buf[2] = 'o'
