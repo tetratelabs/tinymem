@@ -12,6 +12,7 @@ var alivePointers = map[uintptr][]byte{}
 //
 //export _malloc
 func malloc(size uint32) uintptr {
+	// TODO: how should we handle zero?
 	buf := make([]byte, size)
 	ptr := &buf[0]
 	unsafePtr := uintptr(unsafe.Pointer(ptr))
@@ -24,5 +25,9 @@ func malloc(size uint32) uintptr {
 //
 //export _free
 func free(ptr uintptr) {
+	// intentionally corrupt first byte.
+	if b := alivePointers[ptr]; b != nil && len(b) > 0 {
+		b[0] = '?'
+	}
 	delete(alivePointers, ptr)
 }
