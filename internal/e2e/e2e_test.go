@@ -73,7 +73,7 @@ func Test_EndToEnd(t *testing.T) {
 				defer free.Call(testCtx, namePtr)
 
 				// The pointer is a linear memory offset, which is where we write the name.
-				ok := guest.Memory().Write(testCtx, uint32(namePtr), []byte(name))
+				ok := guest.Memory().Write(uint32(namePtr), []byte(name))
 				require.True(t, ok, "out of memory writing %s", name)
 
 				// Finally, we get the greeting message "greet" printed. This shows how to
@@ -86,7 +86,7 @@ func Test_EndToEnd(t *testing.T) {
 				greetingSize := uint32(ptrSize[0])
 
 				// The pointer is a linear memory offset, which is where we write the name.
-				bytes, ok := guest.Memory().Read(testCtx, greetingPtr, greetingSize)
+				bytes, ok := guest.Memory().Read(greetingPtr, greetingSize)
 				require.True(t, ok, "out of memory reading greeting(%d, %d)", greetingPtr, greetingSize)
 
 				require.Equal(t, "Hello, foo!", string(bytes))
