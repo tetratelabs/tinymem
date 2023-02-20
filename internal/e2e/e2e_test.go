@@ -107,7 +107,7 @@ func Test_EndToEnd(t *testing.T) {
 	for _, tt := range tests {
 		tc := tt
 		t.Run(tc.name, func(t *testing.T) {
-			g, err := r.InstantiateModuleFromBinary(testCtx, tc.guest)
+			g, err := r.Instantiate(testCtx, tc.guest)
 			if err != nil {
 				t.Errorf("Error instantiating TinyGo guest - %v", err)
 			}
